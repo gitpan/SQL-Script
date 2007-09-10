@@ -17,3 +17,4 @@ t/01_compile.t
 t/02_simple.t
 t/99_author.t
 t/data/simple.sql
+t/lib/MockDBI.pm

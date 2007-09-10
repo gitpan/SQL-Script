@@ -80,6 +80,16 @@ METHODS
     This method does NOT update the internal state, it simply applies the
     appropriate parsing rules.
 
+  run
+    The "run" method executes the SQL statements in the script object.
+
+    Returns true if ALL queries are executed successfully, or "undef" on
+    error.
+
+    (These return values may be changed in future, probably to a style where
+    all the successfully executed queries are returned, and the object
+    throws an exception on error)
+
 SUPPORT
     Bugs should be reported via the CPAN bug tracker at
 
