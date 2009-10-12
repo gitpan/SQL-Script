@@ -32,12 +32,15 @@ METHODS
   new
       # Default naive split
       $script = SQL::Script->new;
-  
-      # Custom split (string)
+      
+  # Custom split (string)
       $script = SQL::Script->new( split_by => "\n\n;" );
-  
-      # Custom split (regexp)
+      
+  # Custom split (regexp)
       $script = SQL::Script->new( split_by => qr/\n\n;/ );
+      
+  # Create a script object from pre-split statements
+      $script = SQL::Script->new( statements => \@sql );
 
     The "new" constructor create a new SQL script object, containing zero
     statements.
@@ -101,7 +104,7 @@ AUTHOR
     Adam Kennedy <adamk@cpan.org>
 
 COPYRIGHT
-    Copyright 2007 - 2008 Adam Kennedy.
+    Copyright 2007 - 2009 Adam Kennedy.
 
     This program is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself.

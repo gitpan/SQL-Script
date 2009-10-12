@@ -45,7 +45,7 @@ use Params::Util qw{ _STRING _SCALAR _INSTANCE };
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '1.05';
+	$VERSION = '1.06';
 }
 
 
@@ -67,6 +67,9 @@ BEGIN {
   
   # Custom split (regexp)
   $script = SQL::Script->new( split_by => qr/\n\n;/ );
+  
+  # Create a script object from pre-split statements
+  $script = SQL::Script->new( statements => \@sql );
 
 The C<new> constructor create a new SQL script object, containing zero statements.
 
@@ -79,7 +82,7 @@ Returns a new B<SQL::String> object, or throws an exception on error.
   
 sub new {
 	my $class = shift;
-	my $self  = bless { @_, statements => [] }, $class;
+	my $self  = bless { statements => [], @_ }, $class;
 
 	# Check and apply default params
 	unless ( $self->split_by ) {
@@ -237,9 +240,9 @@ sub _INPUT_SCALAR {
 			return undef;
 		}
 		local $/ = undef;
-		open( FILE, $_[0] )          or return undef;
-		defined(my $buffer = <FILE>) or return undef;
-		close( FILE )                or return undef;
+		open( my $file, '<', $_[0] )  or return undef;
+		defined(my $buffer = <$file>) or return undef;
+		close( $file )                or return undef;
 		return \$buffer;
 	}
 	if ( _SCALAR($_[0]) ) {
@@ -271,7 +274,7 @@ Adam Kennedy E<lt>adamk@cpan.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2007 - 2008 Adam Kennedy.
+Copyright 2007 - 2009 Adam Kennedy.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
